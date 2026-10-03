@@ -23,7 +23,7 @@ Ordenar eventos por secuencia de confirmación y fecha/hora cuando existe. Para 
 - El aviso de las 15:04 registra únicamente la salida de la Cadillac. No crear otro evento.
 - Entrada del Jetta y la “E” de Cynthia carecen de hora exacta.
 
-## Importación idempotente
+## Importación idempotente propuesta si se adopta PocketBase
 
 1. Crear colecciones mediante migraciones versionadas. Restringir `events` a escritura por una ruta de dominio; bloquear `updateRule`/`deleteRule` ordinarios.
 2. Importar casas/vehículos/visitantes por sus IDs de fuente; nunca duplicar al reintentar.

@@ -11,7 +11,7 @@ Proyecto aislado **de construcción de una app** para casas, vehículos, persona
 
 El corte incluye 17 casas, 43 vehículos residentes, 4 vehículos de visitas previamente conocidos, una Cadillac de visita y 31 eventos. La entrada de Sushito se registra con los datos comunicados, sin agregar un automóvil. El estado de 26 vehículos residentes no tiene movimiento anotado.
 
-## Repositorios abiertos elegidos
+## Repositorios abiertos candidatos
 
 - [PocketBase](https://github.com/pocketbase/pocketbase): servidor con SQLite, autenticación, API y tiempo real. Licencia MIT.
 - [PocketBase JS SDK](https://github.com/pocketbase/js-sdk): cliente oficial. Licencia MIT.
@@ -19,7 +19,7 @@ El corte incluye 17 casas, 43 vehículos residentes, 4 vehículos de visitas pre
 - [Vite](https://github.com/vitejs/vite): compilación y desarrollo. Licencia MIT.
 - [Ollama](https://github.com/ollama/ollama): cliente/servidor de modelos. El modelo cloud se configura por clave en el servidor y es opcional.
 
-No se han clonado ni modificado esos repositorios en esta carpeta. La aplicación propia usará sus paquetes o binarios y mantendrá la atribución/licencia correspondiente. El código privado y las placas no se publican automáticamente en GitHub.
+No se han clonado ni modificado esos repositorios en esta carpeta. Son opciones investigadas para la construcción; la elección definitiva sigue abierta. El código privado y las placas no se publican automáticamente en GitHub.
 
 ## Archivos privados y control de versiones
 
