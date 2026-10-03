@@ -1,0 +1,13 @@
+data/private/
+pb_data/
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+*.sqlite3
+*.sqlite3-*
+*.db
+*.log
+__pycache__/
+.DS_Store
