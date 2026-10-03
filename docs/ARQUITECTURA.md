@@ -1,4 +1,4 @@
-# Arquitectura del primer producto
+# Arquitectura candidata para evaluar
 
 ```mermaid
 flowchart LR
@@ -11,9 +11,9 @@ flowchart LR
 
 ## Componentes
 
-**PocketBase:** proceso único en la computadora de la portería o un equipo local central. Proporciona SQLite, autenticación, API REST, panel administrativo y suscripciones en tiempo real. Pin a una versión concreta y guarda `pb_migrations/` y `pb_hooks/` en Git; `pb_data/` queda privado. PocketBase recomienda una SPA para el frontend y extensiones para validación de servidor. Su serie anterior a 1.0 puede cambiar, por eso se prueba cualquier actualización. Repositorio: https://github.com/pocketbase/pocketbase
+**PocketBase (candidato):** proceso local con SQLite, autenticación, API REST, panel administrativo y suscripciones en tiempo real. Si se elige, fijar versión y guardar migraciones en Git; `pb_data/` queda privado. Repositorio: https://github.com/pocketbase/pocketbase
 
-**Vue 3 + Vite + SDK oficial:** PWA o navegador para uso diario. El operador ve casa y placa sin entrar al panel de administración. Una sola pantalla de búsqueda/captura con pestañas de pendientes, visitas e historial. Repositorios: https://github.com/vuejs/core, https://github.com/vitejs/vite, https://github.com/pocketbase/js-sdk
+**Vue 3 + Vite + SDK oficial (candidatos):** interfaz de búsqueda/captura en navegador. Repositorios: https://github.com/vuejs/core, https://github.com/vitejs/vite, https://github.com/pocketbase/js-sdk
 
 **Ruta de dominio:** validar coincidencia única, casa, sujeto, estado previo, horario y `client_event_id`; escribir el evento y devolver estado derivado. La interfaz no cambia directamente los campos de estado. Las reglas API impiden actualizaciones o borrados arbitrarios del historial. Para varias estaciones, usar una instancia PocketBase compartida y realtime.
 
@@ -25,7 +25,7 @@ Los registros de estado son **vistas derivadas** de eventos, no columnas editada
 
 ## Backups y operación
 
-Respaldo de `pb_data/` con procedimiento de PocketBase y prueba de restauración antes de abrir la app a otros operadores. Exportación XLSX solo bajo demanda desde la DB, siempre con fecha de corte. El XLSX del 3 de octubre se conserva como referencia de importación; no se sincroniza en paralelo.
+Si se adopta PocketBase, probar respaldos y restauración antes de usarlo para operación. El XLSX del 3 de octubre en esta carpeta sirve solo de contexto. **El Excel actual fuera del proyecto sigue en uso mientras se construye la app.** No hay sincronización ni reemplazo acordados.
 
 ## Límites conscientes
 

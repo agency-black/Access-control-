@@ -1,25 +1,24 @@
 # Decisiones y cuestiones abiertas
 
-## ADR 001 · 2026-10-03 · Una base de eventos
+## Decisión confirmada · 2026-10-03 · Proyecto separado
 
-**Decisión:** PocketBase/SQLite será la fuente operativa. Excel se exporta para consulta y respaldo manual, no se edita en paralelo. Motivo: un evento inmutable y el estado derivado evitan versiones DOCX/XLSX divergentes. La instancia inicial es local; si hay varios dispositivos, una instancia en la red local.
+**Confirmado por el usuario:** este proyecto existe para dar contexto a la construcción de la app. Las tablas y el Excel que ya se usan **no se abandonan ni se alteran por crear este proyecto**. Se siguen actualizando en la conversación. Una eventual migración o sincronización no está decidida.
 
-## ADR 002 · 2026-10-03 · Modelo como intérprete
+## Propuesta técnica · 2026-10-03 · Modelo como intérprete
 
-**Decisión:** Ollama Cloud opcional con salida JSON estructurada; validación determinista y confirmación del operador antes de guardar. `gemma4:31b` es candidato de inicio para cloud; comparar latencia y exactitud con frases reales antes de fijarlo. Gemma 3 oficial tiene 27B, no “Gemma 3 31B”. La falta de clave no bloquea el trabajo manual.
+**Por evaluar:** Ollama Cloud con salida JSON estructurada, validación determinista y confirmación del operador antes de guardar. `gemma4:31b` es un candidato cloud; comparar latencia y exactitud antes de elegir. Gemma 3 oficial tiene 27B, no “Gemma 3 31B”.
 
-## ADR 003 · 2026-10-03 · Persona y vehículo separados
+## Criterio de modelado · 2026-10-03 · Eventos literales
 
-**Decisión:** un vehículo visitante puede salir sin confirmar salida de su conductor. Sushito puede entrar sin automóvil. No inferir ubicación de residentes a partir de todos los autos de la casa. Esta separación corrige el límite del prototipo Python inicial.
+**Decisión:** registrar por separado cada aviso explícito de persona o vehículo. La entrada de Sushito no contiene datos de automóvil y la salida de la Cadillac no contiene otro movimiento. No añadir hechos que el operador no comunicó.
 
-## ADR 004 · 2026-10-03 · Datos sensibles
+## Criterio de trabajo · 2026-10-03 · Datos sensibles
 
-**Decisión:** nombres, placas, fotos y base se mantienen en `data/private/` y `pb_data/`, ambos ignorados por Git. El proyecto puede convertirse en repositorio GitHub **privado** después de revisar el primer commit. Nunca publicar datos privados en un repo open source. Usar proyectos open source como dependencias, no hacer público el padrón.
+Nombres, placas y fotos se mantienen en `data/private/`, ignorado por Git. Si después se usa un remoto GitHub, revisar el contenido antes de subirlo. Los repositorios open source son referencias o posibles dependencias, no un permiso para publicar el padrón.
 
 ## Por resolver antes de despliegue
 
 - Equipo anfitrión definitivo y si habrá varios operadores simultáneos.
 - Horarios exactos de avisos sin hora; no asumirlos en el corte inicial.
 - Confirmación de placas discrepantes Honda casa 12 y BMW casa 6.
-- ¿Hugo se fue en la Cadillac? Actualmente desconocido.
-- Nombre legal de “Sushito” y si llegó a pie o en otro vehículo: no comunicado.
+- Datos de automóvil del aviso de Sushito: no comunicados; dejar campos vacíos.

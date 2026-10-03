@@ -1,15 +1,15 @@
 # Requisitos de operación
 
-## Usuario y flujo
+## Usuario y flujo propuesto para la app
 
-Operador de portería en México, horario `America/Mexico_City`. El panel principal abre con búsqueda grande, seis vehículos con última salida, visitas con última entrada y un botón para registrar entrada/salida. La consulta por “Mustang negro” debe mostrar casa 12, placa 60G043, padrón y último movimiento. Al informar “ya llegó el Jetta”, debe seleccionar la coincidencia y guardar entrada sin inventar hora; la hora de aviso puede quedar en otro campo.
+Operador de portería en México, horario `America/Mexico_City`. Este documento describe **la app que se pretende construir**, sin cambiar las tablas actuales. Un panel de prueba podría abrir con búsqueda, vehículos con última salida, visitas y entrada/salida. La consulta por “Mustang negro” debe mostrar casa 12, placa 60G043, padrón y último movimiento. Al informar “ya llegó el Jetta”, no debe inventar hora; la hora de aviso puede quedar en otro campo.
 
 ## Vistas
 
 1. **Consulta rápida**: placa, marca/modelo, color, nombre y casa. Resultado exacto o lista de coincidencias; si la búsqueda es ambigua, no responder sí/no de manera falsa.
 2. **Pendientes**: vehículos con último evento `out` sin `in` posterior, con casa, placa, persona anotada, color y hora. Los autos sin registro figuran aparte como `Sin dato`.
 3. **Movimientos**: secuencia inmutable, hora opcional, casa obligatoria, fuente, operador, correcciones vinculadas. Filtros por fecha, casa, placa, persona.
-4. **Visitas**: identidad, casa anfitriona, vehículo opcional, entrada/salida de persona por separado del movimiento del automóvil. Sin placa permitida.
+4. **Visitas**: nombre comunicado, casa, datos de vehículo cuando se indiquen y eventos tal como fueron informados. Placa opcional.
 5. **Padrón**: vehículos y residentes de referencia; cambios auditados y evidencia/observación previa conservada.
 6. **Exportación**: XLSX/CSV manual del estado y bitácora con fecha de corte; no crear documentos nuevos por cada evento.
 
@@ -33,6 +33,6 @@ Operador de portería en México, horario `America/Mexico_City`. El panel princi
 - `Mustang negro` → un vehículo, casa 12, 60G043, último `in` 14:32.
 - `Renault` → casa 1, AI4 AMX, último `out` 14:31.
 - `Jetta` → casa 2, D86 BAH, último `in`, hora de llegada desconocida.
-- `Sushito` → visita casa 12, persona entró 15:06, sin vehículo.
-- `Cadillac negra` → vehículo de visita salió 15:04; Hugo: presencia desconocida.
+- `Sushito` → visita casa 12, entrada 15:06. No agregar vehículo.
+- `Cadillac negra` → salida de Cadillac 15:04. La entrada de Hugo fue 15:02; no registrar otra acción de Hugo.
 - Conteos de residentes 6/11/26; agregar visita no los altera.

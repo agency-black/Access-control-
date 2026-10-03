@@ -1,15 +1,15 @@
 # App de portería
 
-Proyecto aislado para el registro de casas, vehículos, personas y visitas. El corte privado del 3 de octubre de 2026 está en `data/private/`. Este repositorio **todavía no es la app PocketBase/Vue terminada**: contiene la base de datos exportada, reglas de trabajo, arquitectura y tareas para construirla sin perder el contexto. El prototipo Python anterior se conserva fuera de este repositorio y no es la base autoritativa.
+Proyecto aislado **de construcción de una app** para casas, vehículos, personas y visitas. El corte privado del 3 de octubre de 2026 está en `data/private/`. Este repositorio contiene contexto, datos copiados, reglas de trabajo, opciones técnicas y tareas. **Las tablas y el Excel actuales de la conversación siguen en uso y se siguen actualizando.** Este proyecto no los sustituye ni les cambia datos.
 
 ## Punto de partida
 
 1. Leer `AGENTS.md` y `MEMORIA_PROYECTO.md`.
 2. Verificar el corte privado: `python3 tools/export_snapshot.py`.
 3. Leer `docs/REQUISITOS.md`, `docs/MODELO_DATOS.md`, `docs/ARQUITECTURA.md` y `docs/PLAN.md`.
-4. Empezar por la migración y el importador; después construir la pantalla de operación.
+4. Construir y probar sobre una copia de los datos, sin modificar las tablas actuales.
 
-El corte incluye 17 casas, 43 vehículos residentes, 4 vehículos de visitas previamente conocidos, una Cadillac visitando y 31 eventos. Sushito es una persona visitante sin vehículo identificado. El estado de 26 vehículos residentes sigue sin confirmar; no se debe transformarlo en “dentro”.
+El corte incluye 17 casas, 43 vehículos residentes, 4 vehículos de visitas previamente conocidos, una Cadillac de visita y 31 eventos. La entrada de Sushito se registra con los datos comunicados, sin agregar un automóvil. El estado de 26 vehículos residentes no tiene movimiento anotado.
 
 ## Repositorios abiertos elegidos
 
@@ -25,4 +25,4 @@ No se han clonado ni modificado esos repositorios en esta carpeta. La aplicació
 
 `data/private/` contiene nombres, placas y fotos. `.gitignore` impide que entren en un commit normal. El archivo comprimido de entrega del proyecto **sí contiene** esta carpeta para conservar el corte. Si se crea más adelante un repositorio remoto, será necesario decidir expresamente si será privado y comprobar `git status` antes de subirlo.
 
-El Excel incluido en `data/private/reference/` es una foto del estado, no una segunda base de datos. La futura app guardará eventos en PocketBase y podrá exportar Excel bajo demanda, sin editar DOCX.
+El Excel incluido en `data/private/reference/` es una **copia fechada para contexto**. El Excel actual fuera de este proyecto continúa siendo el instrumento de trabajo. No se ha decidido migrarlo ni sincronizarlo con la app.

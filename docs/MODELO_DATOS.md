@@ -1,6 +1,6 @@
 # Modelo de datos y migración
 
-La carpeta `data/private/export/` es el corte inicial normalizado. Sus archivos son JSON UTF-8 y llevan identificadores estables. Los datos operativos posteriores deben vivir en PocketBase; nunca reimportar el corte de manera destructiva.
+La carpeta `data/private/export/` es un corte de contexto normalizado. Sus archivos son JSON UTF-8 y llevan identificadores estables. Las tablas actuales fuera del proyecto siguen en uso. PocketBase es un candidato para el prototipo; no sobrescribir jamás las tablas actuales con este corte.
 
 | Entidad | Campos principales | Regla |
 |---|---|---|
@@ -13,14 +13,14 @@ La carpeta `data/private/export/` es el corte inicial normalizado. Sus archivos 
 
 ## Estado derivado
 
-Ordenar eventos por secuencia de confirmación y fecha/hora cuando existe. Para cada vehículo, el último evento relevante define `last_seen_in` o `last_seen_out`; sin evento = `no_movement_recorded`. El estado de una persona se deriva solo de eventos de persona o confirmaciones explícitas. **No inferir persona por movimiento de vehículo.** Un evento sin hora exacta mantiene `time = null` y `reported_at` en otra columna.
+Ordenar eventos por secuencia de confirmación y fecha/hora cuando existe. Para cada vehículo, el último evento relevante define `last_seen_in` o `last_seen_out`; sin evento = `no_movement_recorded`. Guardar únicamente los eventos de persona y automóvil comunicados expresamente. Un evento sin hora exacta mantiene `time = null` y `reported_at` en otra columna.
 
 ## Hechos de la importación
 
 - 17 casas, 43 autos de residentes, 4 vehículos de visita preexistentes, una Cadillac visitante.
 - 31 eventos; último evento: Sushito entra a casa 12, 15:06.
-- El registro `vis-20261003-1202` del prototipo anterior fingía un automóvil “No indicado” para Sushito. En esta exportación se convierte correctamente en **evento de persona con `vehicle_id = null`**.
-- La salida de la Cadillac a las 15:04 tiene conductor no indicado. No crear evento de salida de Hugo.
+- El aviso de Sushito se exporta como entrada de persona a las 15:06; no se agrega automóvil porque el aviso no lo menciona.
+- El aviso de las 15:04 registra únicamente la salida de la Cadillac. No crear otro evento.
 - Entrada del Jetta y la “E” de Cynthia carecen de hora exacta.
 
 ## Importación idempotente

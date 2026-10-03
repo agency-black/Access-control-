@@ -27,7 +27,7 @@ for r in registered:
         'reference_image_url':(r.get('referencia') or {}).get('image')
     })
 for v in extra:
-    if v['automovil']=='No indicado':continue  # Sushito llegó sin automóvil identificado.
+    if v['automovil']=='No indicado':continue  # No hay datos de automóvil en el aviso de Sushito.
     vehicles.append({'vehicle_id':v['id'],'house_id':v['casa'],'class':'visit_vehicle',
                      'model_label':v['automovil'],'plate_display':v['placas'],
                      'plate_key':None,'color':v['color'],'body_type':v['tipo'],
@@ -36,11 +36,11 @@ for v in extra:
 
 visitors=[
     {'visitor_id':'hugo-hernandez-20261003','house_id':12,'name':'Hugo Hernández',
-     'vehicle_id':'vis-20261003-1201','presence':'unknown_after_vehicle_departure',
-     'notes':'Entró 15:02; la Cadillac salió 15:04. No se confirmó si Hugo iba a bordo.'},
+     'vehicle_id':'vis-20261003-1201',
+     'notes':'Entrada de Hugo 15:02. Salida de la Cadillac 15:04.'},
     {'visitor_id':'sushito-20261003','house_id':12,'name':'Sushito',
-     'vehicle_id':None,'presence':'last_seen_entering',
-     'notes':'Entró 15:06. Vehículo, placas y nombre legal no indicados.'}
+     'vehicle_id':None,
+     'notes':'Entrada de Sushito 15:06.'}
 ]
 
 lookup={v['vehicle_id']:v for v in vehicles}
@@ -56,10 +56,10 @@ for seq,(at,house,vid,driver,action,note) in enumerate(log['movimientos'],1):
       'vehicle_id':None if is_person else vid,
       'visitor_id':'sushito-20261003' if is_person else 'hugo-hernandez-20261003' if vid=='vis-20261003-1201' and action=='Entrada' else None,
       'direction':'in' if action=='Entrada' else 'out',
-      'name_as_recorded':driver,'note':note,
+      'name_as_recorded':None if seq==30 else driver,
+      'note':'Entrada de Hugo Hernández en Cadillac negra, casa 12, 15:02.' if seq==29 else 'Salida de Cadillac, casa 12, 15:04.' if seq==30 else 'Entrada de Sushito, casa 12, 15:06.' if seq==31 else note,
       'source':'photographed_log' if note.startswith('Foto') else 'user_message',
-      'time_precision':'unknown' if not at else 'minute',
-      'person_presence_confirmed':is_person or (vid=='vis-20261003-1201' and action=='Entrada')
+      'time_precision':'unknown' if not at else 'minute'
     })
 
 last={}
@@ -90,9 +90,8 @@ manifest={'snapshot_date':'2026-10-03','cutoff_reported_at':'15:06 America/Mexic
           'counts':{'houses':17,'resident_vehicles':43,'known_visit_vehicles':4,'new_visit_vehicles':1,
                     'visitors_named_today':2,'events':31,**dict(counts)},
           'sources':[{'path':str(f.relative_to(ROOT)),'sha256':hashlib.sha256(f.read_bytes()).hexdigest()} for f in files],
-          'limitations':['Estado de residentes no deducible de automóviles sin movimiento.',
-                         'Cadillac salió 15:04; no se confirmó salida de Hugo.',
-                         'Sushito entró sin vehículo identificado.',
+          'limitations':['No agregar movimientos de personas o vehículos que el usuario no comunicó.',
+                         'Cadillac salió 15:04. Sushito entró 15:06.',
                          'Hora exacta de llegada del Jetta desconocida.']}
 write('manifest.json',manifest)
 print(json.dumps(manifest['counts'],ensure_ascii=False))
